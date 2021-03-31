@@ -6,7 +6,7 @@ from django.core.mail import send_mail
 from django.urls import reverse_lazy
 
 from .helpers import generate_confirmation_number
-from .mailers import AccountMailer
+# from .mailers import AccountMailer
 
 from accounts.managers import AccountManager
 
@@ -27,8 +27,8 @@ class Account(AbstractUser):
         return self.email
 
     def save(self, *args, **kwargs):
-        if self.pk == None:
-            self.send_account_confirmation_email()
+        # if self.pk == None:
+            # self.send_account_confirmation_email()
         super(Account, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
