@@ -48,6 +48,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'accounts',
+    'books',
 ]
 
 MIDDLEWARE = [
@@ -137,3 +140,8 @@ STATIC_URL = '/static/'
 TWILIO_ACCOUNT_SID = env('TWILIO_ACCOUNT_SID')
 TWILIO_AUTH_TOKEN = env('TWILIO_AUTH_TOKEN')
 TWILIO_PHONE_NUMBER = env('TWILIO_PHONE_NUMBER')
+
+
+## Accounts
+
+AUTH_USER_MODEL = 'accounts.Account'
