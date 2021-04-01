@@ -51,6 +51,7 @@ INSTALLED_APPS = [
 
     'accounts',
     'books',
+    'logs',
 ]
 
 MIDDLEWARE = [
@@ -93,6 +94,11 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+
+## Accounts
+
+AUTH_USER_MODEL = 'accounts.Account'
 
 
 # Password validation
@@ -140,8 +146,3 @@ STATIC_URL = '/static/'
 TWILIO_ACCOUNT_SID = env('TWILIO_ACCOUNT_SID')
 TWILIO_AUTH_TOKEN = env('TWILIO_AUTH_TOKEN')
 TWILIO_PHONE_NUMBER = env('TWILIO_PHONE_NUMBER')
-
-
-## Accounts
-
-AUTH_USER_MODEL = 'accounts.Account'
