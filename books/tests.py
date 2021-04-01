@@ -4,6 +4,7 @@ from accounts.factories import AccountFactory
 
 from .factories import BookFactory
 
+
 # Create your tests here.
 class BookTest(TestCase):
     def setUp(self):
@@ -23,3 +24,4 @@ class BookTest(TestCase):
         self.book.return_to_owner()
         
         self.assertEqual(self.book.borrower, None)
+
