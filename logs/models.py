@@ -4,7 +4,7 @@ from accounts.models import Account
 
 # Create your models here.
 class Log(models.Model):
-    book = models.ForeignKey('books.Book', on_delete=models.CASCADE)
+    book_copy = models.ForeignKey('book_copies.BookCopy', on_delete=models.CASCADE)
 
 
 class LogEntry(models.Model):

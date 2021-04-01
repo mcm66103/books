@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from books.factories import BookFactory
+from book_copies.factories import BookCopyFactory
 
 from .models import Log
 
@@ -8,9 +8,10 @@ from .models import Log
 # Create your tests here.
 class LogTest(TestCase):
     def setUp(self):
-        self.book = BookFactory.build()
-        self.book.owner.save()
-        self.book.save()
+        self.book_copy = BookCopyFactory.build()
+        self.book_copy.owner.save()
+        self.book_copy.book.save()
+        self.book_copy.save()
 
     def test_new_book_creates_associated_log(self):
         self.assertEqual(1, Log.objects.all().count())
