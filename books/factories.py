@@ -8,6 +8,5 @@ class BookFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Book
 
-    owner = factory.SubFactory(AccountFactory)
     title = factory.Faker('sentence', nb_words=4)
     author = factory.Faker('name')
