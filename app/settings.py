@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'accounts',
     'books',
     'book_copies',
+    'book_requests',
     'logs',
 ]
 

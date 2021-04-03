@@ -1,8 +1,12 @@
 from django.db import models
 
+from accounts.models import Account
+from book_copies.models import BookCopy
+
+
 # Create your models here.
 class BookRequest(models.Model):
-    STATUS_CHOICES(
+    STATUS_CHOICES = (
         ('n', 'New'),
         ('a', 'Accepted'),
         ('r', 'Rejected'),
@@ -13,20 +17,22 @@ class BookRequest(models.Model):
     )
      
     status = models.CharField(max_length=4, choices=STATUS_CHOICES)
-    book_instance = models.ForeignKey(BookInstance, on_delete=models.CASCADE)
+    book_copy = models.ForeignKey(BookCopy, on_delete=models.CASCADE)
     borrower = models.ForeignKey(Account, on_delete=models.CASCADE)
     original_due_date = models.DateField()
-    due_date = models.DateField() 
+    due_date = models.DateField()
 
-    def accept_request(self, request):
-        if request.user != book_instance.owner: 
+    def accept_request(self, account):
+        if account != self.book_copy.owner:
             raise Exception("Only the owner of the book may except the request.")
 
         self.status = 'a'
         self.save()
 
-    def reject_request(self, request): 
-        if request.user != book_instance.owner: 
+        self.book_copy.mark_unavailable()
+
+    def reject_request(self, account): 
+        if account != self.book_copy.owner: 
             raise Exception("Only the owner of the book may except the request.")
 
         self.status = 'r'
@@ -36,7 +42,7 @@ class BookRequest(models.Model):
         if self.status != 'a':
             raise Exception("This book is not eligible for checkout")
 
-        self.book_instance.lend_to(self.borrower)
+        self.book_copy.lend_to(self.borrower)
 
         self.status = 'i'
         self.save()
@@ -46,3 +52,5 @@ class BookRequest(models.Model):
 
         self.status = 'r'
         self.save()
+
+        self.book_copy.mark_available()
