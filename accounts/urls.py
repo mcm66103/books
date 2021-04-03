@@ -19,12 +19,14 @@ from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 
-from .views import LoginView, ProfileView, CreateAccountView, ConfirmAccount, ConfirmPhone
+from .views import LoginView, ProfileView, CreateAccountView, ConfirmAccount, ConfirmPhone, InviteUser
 
 urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('create/', CreateAccountView.as_view(), name='create_account'),
+    path('create/<invite_number>/', CreateAccountView.as_view(), name='create_account_from_invite'),
+    path('invite/', InviteUser.as_view(), name='invite_user'),
     path('profile/', ProfileView, name='profile'),
     path('confim/<confirmation_number>/', ConfirmAccount.as_view(), name='confirm_account'),
     path('confirm/<confirmation_number>/phone/', ConfirmPhone.as_view(), name='confirm_phone'),

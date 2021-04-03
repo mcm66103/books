@@ -37,7 +37,11 @@ class Account(AbstractUser):
     confirmation_number = models.CharField(max_length=32, default=generate_confirmation_number)
     confirmed_at = models.DateTimeField(blank=True, null=True)
 
+    invite_number = models.CharField(max_length=32, default=generate_confirmation_number)
+
     phone = PhoneField(blank=True) #  optional kwarg: help_text=''
+
+    friends = models.ManyToManyField("accounts.Account")
 
     def __str__(self):
         return self.email
@@ -46,7 +50,6 @@ class Account(AbstractUser):
         send_sms = (settings.TEST_SMS and kwargs.pop('send_sms', False)) or settings.SMS_VERIFICATION
 
         if not self.pk:
-            self.set_phone_confirmation_number()
             self.set_password(self.password)
 
             if send_sms:
@@ -87,7 +90,15 @@ class Account(AbstractUser):
         AccountSMS().confirm_account_phone_sms(self)
 
     def confirm_phone_number(self, save=True):
+        
         self.phone_confirmed_at = datetime.now()
 
         if save: 
             self.save()
+
+    def invite_friend(self, to):
+        AccountSMS().invite_friend(self, to) 
+
+    def add_friend(self, new_friend):
+        self.friends.add(new_friend)
+        self.save()
