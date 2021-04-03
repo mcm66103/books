@@ -19,7 +19,6 @@ from accounts.sms import AccountSMS
 from .forms import LoginForm, InviteForm
 from .models import Account
 
-# Create your views here.
 
 class LoginView(BaseLoginView):
     """The user can log in to the application."""
@@ -94,6 +93,7 @@ class CreateAccountView(CreateView):
 
         return response
 
+
 class ConfirmAccount(TemplateView):
 
     template_name = "accounts/profile.html"
@@ -113,6 +113,7 @@ class ConfirmAccount(TemplateView):
 
         return redirect(reverse_lazy("profile"))
 
+
 class ConfirmPhone(TemplateView):
 
     template_name = "accounts/profile.html"
@@ -130,6 +131,7 @@ class ConfirmPhone(TemplateView):
 
 
         return redirect(reverse_lazy("profile"))
+
 
 class InviteUser(LoginRequiredMixin, FormView):
 
