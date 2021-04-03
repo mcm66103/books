@@ -64,3 +64,13 @@ sms = AccountSMS():
 account = Account.objects.get(email="jeffers@gmail.com")
 sms.send_book_return_reminder(account)
 ```
+
+## Troubleshooting ## 
+
+**Migrations**
+
+make sure your migrations are up to date. 
+
+```
+python manage.py migrate
+```

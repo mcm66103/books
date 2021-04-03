@@ -10,9 +10,9 @@ class SMS():
 
         self.client = Client(account_sid, auth_token)
 
-    def send(self, to, body): 
+    def send(self, to, body):
         self.client.messages.create(
-            to = to, 
+            to = to.raw_phone, 
             from_ = settings.TWILIO_PHONE_NUMBER,
             body = body
         )

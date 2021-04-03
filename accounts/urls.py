@@ -1,4 +1,4 @@
-"""ez_django URL Configuration
+"""app URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.2/topics/http/urls/
@@ -19,7 +19,7 @@ from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 
-from .views import LoginView, ProfileView, CreateAccountView, ConfirmAccount
+from .views import LoginView, ProfileView, CreateAccountView, ConfirmAccount, ConfirmPhone
 
 urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
@@ -27,6 +27,7 @@ urlpatterns = [
     path('create/', CreateAccountView.as_view(), name='create_account'),
     path('profile/', ProfileView, name='profile'),
     path('confim/<confirmation_number>/', ConfirmAccount.as_view(), name='confirm_account'),
+    path('confirm/<confirmation_number>/phone/', ConfirmPhone.as_view(), name='confirm_phone'),
     path('reset_password/', auth_views.PasswordResetView.as_view(), name ='reset_password'),
     path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(), name ='password_reset_done'),
     path('reset/<uidb64>/<token>', auth_views.PasswordResetConfirmView.as_view(), name ='password_reset_confirm'),

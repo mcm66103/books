@@ -1,0 +1,73 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+        <meta name="description" content="{{ SITE_DESCRIPTION }}">
+        <meta name="keywords" content="{{ SITE_KEYWORDS }}">
+
+        <!-- Favicon -->
+        <link rel="shortcut icon" type="image/png" href="{{ STATIC_URL }}{{ FAVICON }}">
+
+
+        <!-- Custom Stylesheet -->
+        <link rel="stylesheet" href="{% static 'app/css/styles.css' %}">
+
+
+        {% for snippet in boh_snippets %}
+            {{ snippet.snippet|safe }}
+        {% endfor %}
+
+
+        {% block head %}
+        {% endblock %}
+
+
+        {% for snippet in eoh_snippets %}
+            {{ snippet.snippet|safe }}
+        {% endfor %}
+    </head>
+
+    <body>
+
+        {% if HEADER_CTA %}
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-center py-2">
+                        <p class="mr-2 my-0 align-self-center">{{ HEADER_CTA_MESSAGE }} </p><a href="{{ HEADER_CTA_LINK }}" class="btn btn-primary">{{HEADER_CTA}}</a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% include 'app/shared/header.html' %}
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% for snippet in bob_snippets %}
+            {{ snippet.snippet|safe }}
+        {% endfor %}
+
+        {% block content %}
+        {% endblock %}
+
+        {% include 'app/shared/footer.html' %}
+
+        {% for snippet in eob_snippets %}
+            {{ snippet.snippet|safe }}
+        {% endfor %}
+
+        {% block scripts %}
+        {% endblock %}
+    </body>
+</html>
