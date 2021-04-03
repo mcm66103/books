@@ -6,7 +6,9 @@ chardet==4.0.0
 cryptography==3.4.7
 Django==3.1.7
 django-environ==0.4.5
+django-phone-field==1.8.1
 django-push-notifications==2.0.0
+django-sass==1.0.1
 factory-boy==3.2.0
 Faker==7.0.1
 h2==2.6.2
@@ -15,6 +17,7 @@ http-ece==1.1.0
 hyper==0.7.0
 hyperframe==3.2.0
 idna==2.10
+libsass==0.20.1
 py-vapid==1.8.0
 pycparser==2.20
 PyJWT==1.7.1

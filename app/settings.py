@@ -14,10 +14,15 @@ import os
 import environ
 
 env = environ.Env(
+    ENV=(str, ''),
+    BASE_URL=(str, ''),
     SECRET_KEY=(str, ''),
     TWILIO_ACCOUNT_SID=(str, ''),
     TWILIO_AUTH_TOKEN=(str, ''),
     TWILIO_PHONE_NUMBER=(str, ''),
+    TEST_PHONE=(str, ''),
+    TEST_SMS=(bool, False),
+    SMS_VERIFICATION=(bool, False),
 )
 
 # reading .env file
@@ -26,9 +31,14 @@ environ.Env.read_env()
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# Build links inside then project like this:
+BASE_URL = env('BASE_URL')
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
+
+ENV = env('ENV')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY')
@@ -49,9 +59,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Installed apps
+    'django_sass',
+    'phone_field',
+
+    # Project apps
+    'app',
     'accounts',
     'books',
     'book_copies',
+    'book_requests',
     'logs',
 ]
 
@@ -70,7 +87,9 @@ ROOT_URLCONF = 'app.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            'app/templates',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -140,10 +159,32 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'app/static'),
+]
+
+##################################
+## Deployment staticfiles setup ##
+##################################
+#
+# if ENV != 'development':
+#     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+#     DEFAULT_FILE_STORAGE = 'app.storage_backends.MediaStorage'
+#
+# AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+#
+# AWS_S3_OBJECT_PARAMETERS = {
+#     'CacheControl': 'max-age=86400'
+# }
+
 
 # SMS settings
 # https://www.twilio.com/docs/libraries/python
 
-TWILIO_ACCOUNT_SID = env('TWILIO_ACCOUNT_SID')
-TWILIO_AUTH_TOKEN = env('TWILIO_AUTH_TOKEN')
-TWILIO_PHONE_NUMBER = env('TWILIO_PHONE_NUMBER')
+TWILIO_ACCOUNT_SID      = env('TWILIO_ACCOUNT_SID')
+TWILIO_AUTH_TOKEN       = env('TWILIO_AUTH_TOKEN')
+TWILIO_PHONE_NUMBER     = env('TWILIO_PHONE_NUMBER')
+
+SMS_VERIFICATION        = env('SMS_VERIFICATION')
+TEST_PHONE              = env('TEST_PHONE')
+TEST_SMS                = env('TEST_SMS')
