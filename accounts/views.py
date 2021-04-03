@@ -47,7 +47,7 @@ class CreateAccountView(CreateView):
 
     model = Account
     template_name = "accounts/create_account.html"
-    fields = ["email", "password"]
+    fields = ["email", "phone", "password"]
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
@@ -71,6 +71,24 @@ class ConfirmAccount(TemplateView):
         if account.is_confirmed():
             account.confirmed_at = datetime.now() 
             account.save()
+            messages.success(request, "Your account is confirmed. Please log in to continue.")
+
+        else: 
+            messages.info(request, "It looks like this account has already been confirmed. Log in to continue")
+
+
+        return redirect(reverse_lazy("profile"))
+
+class ConfirmPhone(TemplateView):
+
+    template_name = "accounts/profile.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        confirmation_number = kwargs["confirmation_number"]
+        account = Account.objects.get(phone_confirmation_number=confirmation_number)
+
+        if account.is_confirmed():
+            account.confirm_phone_number()
             messages.success(request, "Your account is confirmed. Please log in to continue.")
 
         else: 

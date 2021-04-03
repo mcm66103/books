@@ -1,4 +1,4 @@
-# from ez_django.mailers import Mailer 
+# from app.mailers import Mailer 
 
 # class AccountMailer(Mailer):
 #     """AccountMailer sends mail for for all account functionality."""
