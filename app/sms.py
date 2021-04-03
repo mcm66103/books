@@ -11,8 +11,14 @@ class SMS():
         self.client = Client(account_sid, auth_token)
 
     def send(self, to, body):
+        # Phone number may be string or PhoneNumber object.
+        try: 
+            to = to.raw_phone
+        except:
+            pass
+
         self.client.messages.create(
-            to = to.raw_phone, 
+            to = to, 
             from_ = settings.TWILIO_PHONE_NUMBER,
             body = body
         )
