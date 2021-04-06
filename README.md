@@ -19,8 +19,22 @@ A decentralized library for people who read paper books.
 python manage.py runserver
 ```
 
-## Initial configuration 
 
+## Updating sass files
+This command monitors the `scss` folder for changes and compiles it to css.
+
+```
+python manage.py sass app/static/app/scss/ app/static/app/css/ --watch
+```
+
+
+## Running the tests
+```
+python manage.py test
+```
+
+
+## Initial configuration 
 Install the packages.
 
 ```
@@ -39,12 +53,23 @@ These environment variables are required to configure the SMS client for text me
 TWILIO_ACCOUNT_SID=
 TWILIO_AUTH_TOKEN=
 TWILIO_PHONE_NUMBER=
+TEST_PHONE=                         # Receives SMS during tests.
 ```
 
 Ask Mav if you need them as they are currently associated with a personal account. 
 
-## Common Patterns
+**Environment Variables**
+```
+ENV=development                     # production, development, TODO: staging
+BASE_URL=http://127.0.0.1:8000      # You do not want a trailing slash
+SECRET_KEY=                         # Get from mav
+SMS_VERIFICATION=True               # Requires users to confirm SMS for their account
+TEST_SMS=                           # Send SMS to TEST_PHONE during tests
+DEBUG=                              # Always False for production
+```
 
+
+## Common Patterns
 **SMS**
 ```python
 from app.sms import SMS
@@ -65,9 +90,11 @@ account = Account.objects.get(email="jeffers@gmail.com")
 sms.send_book_return_reminder(account)
 ```
 
-## Troubleshooting ## 
 
+## Troubleshooting ## 
 **Migrations**
+
+Screen Shot 2021-04-03 at 1.05.08 PM.png![image](https://user-images.githubusercontent.com/37980417/113709538-9ac5d900-96b0-11eb-97e1-0ad9a77288a5.png)
 
 make sure your migrations are up to date. 
 
