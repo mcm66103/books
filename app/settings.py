@@ -14,6 +14,7 @@ import os
 import environ
 
 env = environ.Env(
+    DEBUG=(bool, False),
     ENV=(str, ''),
     BASE_URL=(str, ''),
     SECRET_KEY=(str, ''),
@@ -27,6 +28,9 @@ env = environ.Env(
 
 # reading .env file
 environ.Env.read_env()
+
+# Debug
+DEBUG = env('DEBUG')
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -43,10 +47,15 @@ ENV = env('ENV')
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    # Development 
+    '127.0.0.1',
+
+    # Production
+    'bookshare-prod.herokuapp.com',
+    'www.bookshare.app',
+]
 
 
 # Application definition
@@ -74,6 +83,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -162,6 +172,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'app/static'),
 ]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 ##################################
 ## Deployment staticfiles setup ##
