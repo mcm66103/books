@@ -14,6 +14,7 @@ import os
 import environ
 
 env = environ.Env(
+    DEBUG=(bool, False),
     ENV=(str, ''),
     BASE_URL=(str, ''),
     SECRET_KEY=(str, ''),
@@ -27,6 +28,9 @@ env = environ.Env(
 
 # reading .env file
 environ.Env.read_env()
+
+# Debug
+DEBUG = env('DEBUG')
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
