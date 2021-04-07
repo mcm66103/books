@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 
 from accounts.models import Account
@@ -54,3 +56,21 @@ class BookRequest(models.Model):
         self.save()
 
         self.book_copy.mark_available()
+
+    def days_until_due(self):
+        '''
+        Returns an integer
+            - number of days until the book is due
+
+        OR
+
+        Retruns False
+            - When the book has a negative number of days until due.
+
+        Do not use this method to build logic concerning overdue books.
+        This method is only for when the number of days until due makes 
+        sense.
+        '''
+        timedelta = self.due_date - datetime.date.today()
+        days_remaining = timedelta.days if 0 <= timedelta.days else False
+        return days_remaining
