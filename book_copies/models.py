@@ -13,7 +13,7 @@ class BookCopy(models.Model):
     borrower = models.ForeignKey(Account, on_delete=models.SET_NULL, blank=True, null=True, related_name="borrowed_books")
  
     def __str__(self):
-        return f"{owners}'s copy of {book}"
+        return f"{self.owner}'s copy of {self.book}"
 
     def lend_to(self, borrower):
         self.borrower = borrower
@@ -35,8 +35,6 @@ class BookCopy(models.Model):
         if save:
             self.save()
     
-
-
     def save(self, *args, **kwargs):
         created = False if self.pk else True
         super(BookCopy, self).save(*args, **kwargs)

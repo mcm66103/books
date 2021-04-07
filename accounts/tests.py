@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.test import TestCase
 
+from app.decorators import require_test_sms
+
 from .factories import AccountFactory
 
 
@@ -19,18 +21,10 @@ class AccountTest(TestCase):
         self.account = AccountFactory.build()
         self.account.save()
 
+    @require_test_sms
     def test_confirm_phone_text(self):
-        if settings.TEST_SMS:      
-            self.confirm_phone_account = AccountFactory.build()
-            self.confirm_phone_account.save(send_sms=True)
-
-            print(
-                "\n"\
-                "\n"\
-                f"A text message has been sent to {self.confirm_phone_account.phone}...\n"\
-                f"Please confirm that text arrived...\n"\
-                "\n"
-            )
+        self.confirm_phone_account = AccountFactory.build()
+        self.confirm_phone_account.save(send_sms=True)
 
     def test_account_has_phone_confirmation_number(self):
         has_phone_confirmation_number = bool(self.account.phone_confirmation_number)
