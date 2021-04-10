@@ -75,19 +75,17 @@ DEBUG=                              # Always False for production
 from app.sms import SMS
 
 # As a one off message
-sms = SMS()
-sms.send('<TO_PHONE_NUMBER>', '<MESSAGE>')
-
+SMS.send('<TO_PHONE_NUMBER>', '<MESSAGE>')
 
 # Extending the client for a particular app
 class AccountSMS(SMS):
-    def send_book_return_reminder(account):
+    @classmethod
+    def send_book_return_reminder(cls, account):
         message = "This is my message for this text" 
-        self.send(account.phone_number, message)
+        cls.send(account.phone_number, message)
 
-sms = AccountSMS():
 account = Account.objects.get(email="jeffers@gmail.com")
-sms.send_book_return_reminder(account)
+AccountSMS.send_book_return_reminder(account)
 ```
 
 
