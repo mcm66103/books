@@ -1,6 +1,7 @@
 from app.sms import SMS
 
 class BookRequestSMS(SMS):
+    @classmethod
     def send_upcoming_due_date_reminder_sms(self, book_request):
         self.send(
             to = book_request.borrower.phone,

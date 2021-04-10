@@ -95,7 +95,7 @@ class Account(AbstractUser):
             self.save()
 
     def invite_friend(self, to):
-        AccountSMS().invite_friend(self, to) 
+        AccountSMS.invite_friend(self, to) 
 
     def add_friend(self, new_friend):
         self.friends.add(new_friend)
