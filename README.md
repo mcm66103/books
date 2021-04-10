@@ -46,6 +46,13 @@ run the migrations
 python manage.py migrate
 ```
 
+Export `GOOGLE_APPLICATION_CREDENTIALS` for google cloud vision API.
+
+In a bash console...
+```bash
+export GOOGLE_APPLICATION_CREDENTIALS="/PATH/TO/YOUR/PROJECT/google_credentials.json" 
+```
+
 **SMS**
 These environment variables are required to configure the SMS client for text message notifications. 
 
