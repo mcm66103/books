@@ -87,7 +87,7 @@ class Account(AbstractUser):
             self.save()
 
     def send_phone_confirmation_sms(self):
-        AccountSMS().confirm_account_phone_sms(self)
+        AccountSMS.confirm_account_phone_sms(self)
 
     def confirm_phone_number(self, save=True):
         
@@ -97,7 +97,7 @@ class Account(AbstractUser):
             self.save()
 
     def invite_friend(self, to):
-        AccountSMS().invite_friend(self, to) 
+        AccountSMS.invite_friend(self, to) 
 
     def add_friend(self, new_friend):
         self.friends.add(new_friend)

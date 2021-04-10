@@ -19,7 +19,10 @@ from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 
-from .views import LoginView, ProfileView, CreateAccountView, ConfirmAccount, ConfirmPhone, InviteUser
+from .views import (
+    LoginView, ProfileView, CreateAccountView, ConfirmAccount, ConfirmPhone, InviteUser,
+    PasswordResetView 
+)
 
 urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
@@ -30,7 +33,7 @@ urlpatterns = [
     path('profile/', ProfileView, name='profile'),
     path('confim/<confirmation_number>/', ConfirmAccount.as_view(), name='confirm_account'),
     path('confirm/<confirmation_number>/phone/', ConfirmPhone.as_view(), name='confirm_phone'),
-    path('reset_password/', auth_views.PasswordResetView.as_view(), name ='reset_password'),
+    path('reset_password/', PasswordResetView.as_view(), name ='reset_password'),
     path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(), name ='password_reset_done'),
     path('reset/<uidb64>/<token>', auth_views.PasswordResetConfirmView.as_view(), name ='password_reset_confirm'),
     path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(), name ='password_reset_complete'),

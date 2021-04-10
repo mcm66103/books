@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView as BaseLoginView
+from django.contrib.auth.views import PasswordResetView as BasePasswordResetView
 from django import forms
 from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
@@ -16,7 +17,7 @@ from django.views.generic.edit import CreateView, FormView
 
 from accounts.sms import AccountSMS
 
-from .forms import LoginForm, InviteForm
+from .forms import LoginForm, InviteForm, SMSPasswordResetForm
 from .models import Account
 
 
@@ -140,5 +141,8 @@ class InviteUser(LoginRequiredMixin, FormView):
     success_url = '/'
 
     def form_valid(self, form):
-        AccountSMS().invite_friend(self.request.user, form.cleaned_data['phone_number'])
+        AccountSMS.invite_friend(self.request.user, form.cleaned_data['phone_number'])
         return super().form_valid(form)
+
+class PasswordResetView(BasePasswordResetView):
+    form_class = SMSPasswordResetForm
