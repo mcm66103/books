@@ -23,10 +23,8 @@ from app.helpers.env_helper import EnvHelper
 
 
 class Account(AbstractUser):
-    username = None
-    email = models.EmailField(_('email address'), unique=True)
+    username = models.CharField(max_length=48, unique=True)
 
-    USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
     objects = AccountManager()
@@ -87,7 +85,7 @@ class Account(AbstractUser):
             self.save()
 
     def send_phone_confirmation_sms(self):
-        AccountSMS().confirm_account_phone_sms(self)
+        AccountSMS.confirm_account_phone_sms(self)
 
     def confirm_phone_number(self, save=True):
         

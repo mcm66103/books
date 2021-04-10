@@ -58,7 +58,7 @@ class CreateAccountView(CreateView):
 
     model = Account
     template_name = "accounts/create_account.html"
-    fields = ["email", "phone", "password"]
+    fields = ["username", "phone", "password"]
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)

@@ -8,5 +8,5 @@ class AccountFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Account
 
-    email = factory.Faker('email')
+    username = factory.Faker('user_name')
     phone = settings.TEST_PHONE
