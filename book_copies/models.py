@@ -4,6 +4,8 @@ from accounts.models import Account
 from books.models import Book
 from logs.models import Log
 
+from .managers import BookCopyManager
+
 
 # Create your models here.
 class BookCopy(models.Model):
@@ -11,9 +13,14 @@ class BookCopy(models.Model):
     available = models.BooleanField(default=True)
     owner = models.ForeignKey(Account, on_delete=models.CASCADE, related_name="owned_books")
     borrower = models.ForeignKey(Account, on_delete=models.SET_NULL, blank=True, null=True, related_name="borrowed_books")
+
+    objects = BookCopyManager()
  
     def __str__(self):
         return f"{self.owner}'s copy of {self.book}"
+
+    def get_query_set(self):
+        return BookCopyQuerySet(self.model, using=self._db)
 
     def lend_to(self, borrower):
         self.borrower = borrower
@@ -43,4 +50,9 @@ class BookCopy(models.Model):
 
         return self
 
+    @classmethod
+    def on_shelf_count(cls, account):
+        return cls.on_shelf(account).count()
+
+ 
     

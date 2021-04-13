@@ -39,8 +39,18 @@ def ProfileView(request):
         The user can see information about their profile when
         the user logs in.
     """
+    account = request.user
+    book_on_shelf = BookCopy.on_shelf(account)
+    lifetime_shares = BookRequest.lifetime_shares(account)
 
-    context = { "account": request.user }
+    context = { 
+        "books_on_shelf": book_on_shelf,
+        "borrowed_books": BookCopy.borrowed_by(account),
+        "books_on_shelf_count": book_on_shelf.count(),
+        "lifetime_shares": lifetime_shares,
+        "lifetime_shares_count": lifetime_shares.count(),
+    }
+
     return render(request, "accounts/profile.html", context)
 
 

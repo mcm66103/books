@@ -16,3 +16,6 @@ class BookRequestFactory(factory.django.DjangoModelFactory):
     borrower = factory.SubFactory(AccountFactory)
     original_due_date = datetime.date.today() + datetime.timedelta(days=3)
     due_date = datetime.date.today() + datetime.timedelta(days=3)
+
+class AcceptedBookRequestFactory(BookRequestFactory):
+    status = 'a'
