@@ -11,3 +11,9 @@ class BookCopyFactory(factory.django.DjangoModelFactory):
 
     owner = factory.SubFactory(AccountFactory)
     book = factory.SubFactory(BookFactory)
+
+class UnavailableBookCopyFactory(BookCopyFactory):
+    class Meta:
+        model = BookCopy
+
+    available = False

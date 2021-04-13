@@ -6,7 +6,8 @@ from django.test import TestCase
 
 from app.decorators import require_test_sms
 
-from .factories import BookRequestFactory
+from .factories import BookRequestFactory, AcceptedBookRequestFactory
+from .models import BookRequest
 
 
 class BookRequestTest(TestCase):
@@ -21,6 +22,13 @@ class BookRequestTest(TestCase):
         self.book_request.borrower.save()
 
         self.book_request.save()
+
+
+        self.accepted_book_request = AcceptedBookRequestFactory.build()
+
+        self.accepted_book_request.book_copy = self.book_request.book_copy
+        self.accepted_book_request.borrower = self.book_request.borrower
+        self.accepted_book_request.save()
 
     def test_accept_book_request(self):
         self.book_request.accept_request(self.book_request.book_copy.owner)
@@ -55,6 +63,11 @@ class BookRequestTest(TestCase):
 
         days_remaining = self.book_request.days_until_due()
         self.assertEqual(days_remaining, 3)
+
+    def test_lifetime_shares(self):
+        lifetime_shares = BookRequest.objects.lifetime_shares(self.accepted_book_request.book_copy.owner)
+        self.assertEqual(1, lifetime_shares.count())
+
 
 class BookRequestCommandTest(TestCase):
     '''

@@ -3,7 +3,8 @@ import datetime
 from django.db import models
 
 from accounts.models import Account
-from book_copies.models import BookCopy
+
+from .managers import BookRequestManager
 
 
 # Create your models here.
@@ -19,10 +20,13 @@ class BookRequest(models.Model):
     )
      
     status = models.CharField(max_length=4, choices=STATUS_CHOICES)
-    book_copy = models.ForeignKey(BookCopy, on_delete=models.CASCADE)
+    book_copy = models.ForeignKey('book_copies.BookCopy', on_delete=models.CASCADE)
     borrower = models.ForeignKey(Account, on_delete=models.CASCADE)
+    checkout_date = models.DateField(blank=True, null=True)
     original_due_date = models.DateField()
     due_date = models.DateField()
+
+    objects = BookRequestManager()
 
     def accept_request(self, account):
         if account != self.book_copy.owner:
@@ -74,3 +78,11 @@ class BookRequest(models.Model):
         timedelta = self.due_date - datetime.date.today()
         days_remaining = timedelta.days if 0 <= timedelta.days else False
         return days_remaining
+
+    @property
+    def checkout_length(self):
+        return  (self.due_date - self.checkout_date).days
+    
+    @property
+    def percent_complete(self):
+        return 100 - (self.checkout_length - self.days_until_due) / self.checkout_length * 100
