@@ -16,6 +16,8 @@ from django.views.generic import DetailView
 from django.views.generic.edit import CreateView, FormView
 
 from accounts.sms import AccountSMS
+from book_copies.models import BookCopy
+from book_requests.models import BookRequest
 
 from .forms import LoginForm, InviteForm, SMSPasswordResetForm
 from .models import Account
@@ -40,12 +42,12 @@ def ProfileView(request):
         the user logs in.
     """
     account = request.user
-    book_on_shelf = BookCopy.on_shelf(account)
-    lifetime_shares = BookRequest.lifetime_shares(account)
+    book_on_shelf = BookCopy.objects.on_shelf(account)
+    lifetime_shares = BookRequest.objects.lifetime_shares(account)
 
     context = { 
         "books_on_shelf": book_on_shelf,
-        "borrowed_books": BookCopy.borrowed_by(account),
+        "borrowed_books": BookCopy.objects.borrowed_by(account),
         "books_on_shelf_count": book_on_shelf.count(),
         "lifetime_shares": lifetime_shares,
         "lifetime_shares_count": lifetime_shares.count(),
