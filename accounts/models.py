@@ -100,3 +100,4 @@ class Account(AbstractUser):
     def add_friend(self, new_friend):
         self.friends.add(new_friend)
         self.save()
+

@@ -13,6 +13,13 @@ A decentralized library for people who read paper books.
 [Miro Board](https://miro.com/app/board/o9J_lMm2Kd8=/)
 
 
+**Wireframes**
+
+[figma prototype](https://www.figma.com/proto/Bb3BoGAGiTLHifvJ6aCRhd/BookShare?node-id=105%3A129&view[…]790%2C0.5877559185028076&scaling=scale-down&page-id=102%3A5630)
+
+[figma project file](https://www.figma.com/file/Bb3BoGAGiTLHifvJ6aCRhd/BookShare?node-id=102%3A5630)
+
+
 ## Running the app
 
 ```
