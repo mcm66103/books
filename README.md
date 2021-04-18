@@ -41,15 +41,56 @@ python manage.py test
 ```
 
 
-## Initial configuration 
+## Initial configuration
+I reccomend using pyenv to manage your python version and environment. This project 
+
+[learn more about pyenv](https://github.com/pyenv/pyenv)
+
+Install python build requirements.
+
+[instructions](https://github.com/pyenv/pyenv/wiki#suggested-build-environment)
 Install the packages.
 
+Install pyenv with homebrew
+```bash
+brew update
+brew install pyenv
 ```
+
+Add pyenv init to your shell to enable shims and autocompletion. Please make sure `eval "$(pyenv init -)"` is placed toward the end of the shell configuration file since it manipulates PATH during the initialization.
+```bash
+# zsh
+echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.zshrc
+```
+
+Restart your shell so the path changes take effect. You can now begin using pyenv.
+```bash
+exec "$SHELL"
+```
+
+Install Python versions into `$(pyenv root)/versions`. For example, to download and install Python 2.7.8, run:
+```bash
+pyenv install 3.8.0
+```
+
+Create you python environemnt with the correct version. 
+```bash
+pyenv virtualenv 3.8.0 books
+```
+
+Activate your virtual environment. 
+```bash
+pyenv activate books
+```
+
+Install the project requirements.
+
+```bash
 pip install -r requirements.txt
 ```
 
 run the migrations
-```
+```bash
 python manage.py migrate
 ```
 
@@ -109,7 +150,6 @@ AccountSMS.send_book_return_reminder(account)
 Screen Shot 2021-04-03 at 1.05.08 PM.png![image](https://user-images.githubusercontent.com/37980417/113709538-9ac5d900-96b0-11eb-97e1-0ad9a77288a5.png)
 
 make sure your migrations are up to date. 
-
 ```
 python manage.py migrate
 ```
