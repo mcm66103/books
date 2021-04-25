@@ -42,9 +42,9 @@ python manage.py test
 
 
 ## Initial configuration
-I reccomend using pyenv to manage your python version and environment. This project 
+I reccomend using pyenv virtualenv to manage your python version and environment. This project 
 
-[learn more about pyenv](https://github.com/pyenv/pyenv)
+[learn more about pyenv virtualenv](https://github.com/pyenv/pyenv-virtualenv)
 
 Install python build requirements.
 
@@ -72,6 +72,12 @@ Install Python versions into `$(pyenv root)/versions`. For example, to download 
 ```bash
 pyenv install 3.8.0
 ```
+
+| Troubleshooting |
+| --- | --- |
+| Mac os System Version: macOS 11.2.3 (20D91) has experienced build problems with this version of Python. [These instructions](https://koji-kanao.medium.com/install-python-3-8-0-via-pyenv-on-bigsur-b4246987a548) have been helpful.|
+| --- | --- |
+
 
 Create you python environemnt with the correct version. 
 ```bash
