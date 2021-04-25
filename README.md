@@ -76,8 +76,6 @@ pyenv install 3.8.0
 | Troubleshooting |
 | --- | --- |
 | Mac os System Version: macOS 11.2.3 (20D91) has experienced build problems with this version of Python. [These instructions](https://koji-kanao.medium.com/install-python-3-8-0-via-pyenv-on-bigsur-b4246987a548) have been helpful.|
-| --- | --- |
-
 
 Create you python environemnt with the correct version. 
 ```bash
